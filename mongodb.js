@@ -92,6 +92,9 @@ db.products.find({price: {$gt: 2000}})
 db.products.find({price: { $in: [2000, 10000]}})
 db.products.find({name: {$in: [/Mi/, /eh/]}})
 
+//not in
+db.products.find({name: {$nin: [/Mi/, /eh/]}})
+
 //less than
 db.products.find({price: {$lt: 2000}})
 
