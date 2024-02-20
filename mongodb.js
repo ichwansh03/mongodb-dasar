@@ -160,3 +160,22 @@ db.products.find({tags: { $elemMatch: { $in: ["makanan"]}}})
 
 //mengambil jumlah value
 db.products.find({tags: { $size: 2}})
+db.products.find({}).size()
+
+//mengambil sebagian field
+db.products.find({}, {name: 1, price: 1})
+
+//limit dan offset
+db.products.find({}).limit(4).skip(3)
+
+//sort(-1 descending, 1 ascending)
+db.products.find({}).sort({name: -1})
+
+//mengubah satu dokumen, untuk updateMany menggunakan $and
+db.products.updateOne({_id: 1}, { $set: {price: 12000}})
+
+//mengubah nama field
+db.products.updateMany({}, {$rename: {price: "harga"}})
+
+//add last modified date
+db.products.updateMany({}, { $currentDate: { lastModDate: { $type: "date"}}})
