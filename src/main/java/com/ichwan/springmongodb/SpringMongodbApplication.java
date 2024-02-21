@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.ReplaceOptions;
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+import org.springframework.data.mongodb.core.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -36,7 +33,10 @@ public class SpringMongodbApplication implements CommandLineRunner {
 		//getPersonByName("Ichwan");
 		//getPersonByAddress("Jakarta");
 		//updateName("Abdullah", "3");
-		insertData();
+		//insertData();
+		//upsert("5",30);
+		//updateWithModify();
+		updateWithReplace();
 	}
 
 	public void createPerson(){
@@ -83,5 +83,29 @@ public class SpringMongodbApplication implements CommandLineRunner {
 		Query name = Query.query(Criteria.where("name").is(inserted.getName()));
 		inserted.setName("Ahsan");
 		operations.replace(name, inserted, ReplaceOptions.none());
+	}
+
+	public void upsert(String id, int age){
+		Query query = Query.query(Criteria.where("_id").is(id));
+		Update update = new Update().set("age", age);
+		operations.upsert(query, update, Person.class);
+	}
+
+	public void updateWithModify(){
+		Query query = Query.query(Criteria.where("name").is("Pablo"));
+		Update update = new Update().inc("age",1);
+
+		operations.update(Person.class)
+				.matching(query)
+				.apply(update)
+				.findAndModifyValue();
+	}
+
+	public void updateWithReplace(){
+		operations.update(Person.class)
+				.matching(Query.query(Criteria.where("name").is("Ahsan")))
+				.replaceWith(new Person("9","Ihsan","Malang",27))
+				.withOptions(FindAndReplaceOptions.options().upsert())
+				.findAndReplace();
 	}
 }
