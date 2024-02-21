@@ -104,10 +104,10 @@ db.products.find({price: {$ne: 2000}})
 //not include
 db.products.find({price: {$nin: [2000, 10000]}})
 
-//and
+//and, regex untuk mencari karakter, options i artinya in case sensitive
 db.products.find({ $and: [
     {price: {$in: [10000, 2000, 4000]}},
-    {name: {$regex: /eh/}}
+    {name: {$regex: /eh/, $options: "i"}}
 ]})
 
 //not
