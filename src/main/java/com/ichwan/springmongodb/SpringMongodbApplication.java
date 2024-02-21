@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.ReplaceOptions;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -33,8 +34,9 @@ public class SpringMongodbApplication implements CommandLineRunner {
 		//createPerson();
 		//getAllPerson();
 		//getPersonByName("Ichwan");
-		getPersonByAddress("Jakarta");
+		//getPersonByAddress("Jakarta");
 		//updateName("Abdullah", "3");
+		insertData();
 	}
 
 	public void createPerson(){
@@ -74,5 +76,12 @@ public class SpringMongodbApplication implements CommandLineRunner {
 		Person person = personRepository.findById(id).get();
 		System.out.println(getPersonDetails(person));
 		//operations.update(Person.class).matching(Criteria.where())
+	}
+
+	public void insertData(){
+		Person inserted = operations.insert(new Person("9", "Ammar", "Bekasi", 25));
+		Query name = Query.query(Criteria.where("name").is(inserted.getName()));
+		inserted.setName("Ahsan");
+		operations.replace(name, inserted, ReplaceOptions.none());
 	}
 }
