@@ -20,8 +20,11 @@ public class SpringMongodbApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
-		createPerson();
+	public void run(String... args) {
+		//createPerson();
+		//getAllPerson();
+		//getPersonByName("Ichwan");
+		getPersonByAddress("Jakarta");
 	}
 
 	public void createPerson(){
@@ -29,5 +32,30 @@ public class SpringMongodbApplication implements CommandLineRunner {
 		personRepository.save(new Person("2","Abdul","Jakarta",21));
 		personRepository.save(new Person("3","Ahmad","Bandung",22));
 		personRepository.save(new Person("4","Ujang","Bogor",23));
+	}
+
+	public void getAllPerson(){
+		personRepository.findAll().forEach(item ->
+				System.out.println(getPersonDetails(item))
+		);
+	}
+
+	public void getPersonByName(String name){
+		Person personByName = personRepository.findPersonByName(name);
+		System.out.println(getPersonDetails(personByName));
+	}
+
+	public void getPersonByAddress(String address){
+		Person byAddress = personRepository.findByAddress(address);
+		System.out.println(getPersonDetails(byAddress));
+	}
+
+	public String getPersonDetails(Person person) {
+		return "Person{" +
+				"id='" + person.getId() + '\'' +
+				", name='" + person.getName() + '\'' +
+				", address='" + person.getAddress() + '\'' +
+				", age=" + person.getAge() +
+				'}';
 	}
 }
