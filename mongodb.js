@@ -168,6 +168,9 @@ db.products.find({}).size()
 //mengambil sebagian field
 db.products.find({}, {name: 1, price: 1})
 
+//mengambil semua field kecuali field yg disebutkan
+db.products.find({}, {tags: 0})
+
 //limit dan offset
 db.products.find({}).limit(4).skip(3)
 
@@ -179,6 +182,9 @@ db.products.updateOne({_id: 1}, { $set: {price: 12000}})
 
 //mengubah nama field
 db.products.updateMany({}, {$rename: {price: "harga"}})
+
+//menambahkan field, untuk menghapus gunakan $unset
+db.products.updateMany({}, { $set: {stock: 100}})
 
 //add last modified date
 db.products.updateMany({}, { $currentDate: { lastModDate: { $type: "date"}}})
