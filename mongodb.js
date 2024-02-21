@@ -203,3 +203,13 @@ db.products.createIndex({ name: 1})
 db.products.getIndexes()
 db.products.dropIndex("nama index")
 
+//membuat index khusus type text, direkomendasikan ketimbang menggunakan regex
+db.products.createIndex({
+    name: "text",
+    tags: "text"
+}, {
+    weight: {
+        name: 3,
+        tags: 2
+    }
+})
