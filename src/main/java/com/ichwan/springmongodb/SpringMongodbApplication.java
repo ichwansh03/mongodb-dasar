@@ -34,14 +34,14 @@ public class SpringMongodbApplication implements CommandLineRunner {
 		//getAllPerson();
 		//getPersonByName("Ichwan");
 		getPersonByAddress("Jakarta");
-		updateName("Abdullah", "3");
+		//updateName("Abdullah", "3");
 	}
 
 	public void createPerson(){
-		personRepository.save(new Person("1","Ichwan","Lampung",20));
-		personRepository.save(new Person("2","Abdul","Jakarta",21));
-		personRepository.save(new Person("3","Ahmad","Bandung",22));
-		personRepository.save(new Person("4","Ujang","Bogor",23));
+		personRepository.save(new Person("5","Mahmud","Palembang",20));
+		personRepository.save(new Person("6","Paul","Medan",21));
+		personRepository.save(new Person("7","Pablo","Banjar",22));
+		personRepository.save(new Person("8","Aldo","Riau",23));
 	}
 
 	public void getAllPerson(){

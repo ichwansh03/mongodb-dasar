@@ -9,4 +9,5 @@ public interface PersonRepository extends MongoRepository<Person, String> {
     Person findPersonByName(String name);
 
     Person findByAddress(String address);
+
 }
