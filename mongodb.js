@@ -189,7 +189,17 @@ db.products.updateMany({}, { $set: {stock: 100}})
 //add last modified date
 db.products.updateMany({}, { $currentDate: { lastModDate: { $type: "date"}}})
 
+
+//menghapus dokumen
+db.products.deleteMany({ $harga: { $type: "string"}})
+
 //membuat index agar proses search lebih cepat pada field name secara ascending, jika -1 descending
 db.products.createIndex({ name: 1})
 db.products.getIndexes()
 db.products.dropIndex("nama index")
+
+//membuat index agar proses search lebih cepat pada field name secara ascending, jika -1 descending
+db.products.createIndex({ name: 1})
+db.products.getIndexes()
+db.products.dropIndex("nama index")
+
