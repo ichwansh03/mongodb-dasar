@@ -92,6 +92,9 @@ db.products.find({price: {$gt: 2000}})
 db.products.find({price: { $in: [2000, 10000]}})
 db.products.find({name: {$in: [/Mi/, /eh/]}})
 
+//not in
+db.products.find({name: {$nin: [/Mi/, /eh/]}})
+
 //less than
 db.products.find({price: {$lt: 2000}})
 
@@ -101,10 +104,10 @@ db.products.find({price: {$ne: 2000}})
 //not include
 db.products.find({price: {$nin: [2000, 10000]}})
 
-//and
+//and, regex untuk mencari karakter, options i artinya in case sensitive
 db.products.find({ $and: [
     {price: {$in: [10000, 2000, 4000]}},
-    {name: {$regex: /eh/}}
+    {name: {$regex: /eh/, $options: "i"}}
 ]})
 
 //not
@@ -165,6 +168,9 @@ db.products.find({}).size()
 //mengambil sebagian field
 db.products.find({}, {name: 1, price: 1})
 
+//mengambil semua field kecuali field yg disebutkan
+db.products.find({}, {tags: 0})
+
 //limit dan offset
 db.products.find({}).limit(4).skip(3)
 
@@ -177,5 +183,11 @@ db.products.updateOne({_id: 1}, { $set: {price: 12000}})
 //mengubah nama field
 db.products.updateMany({}, {$rename: {price: "harga"}})
 
+//menambahkan field, untuk menghapus gunakan $unset
+db.products.updateMany({}, { $set: {stock: 100}})
+
 //add last modified date
 db.products.updateMany({}, { $currentDate: { lastModDate: { $type: "date"}}})
+
+//menghapus dokumen
+db.products.deleteMany({ $harga: { $type: "string"}})
