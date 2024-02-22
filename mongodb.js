@@ -218,3 +218,6 @@ db.products.createIndex({
 db.createCollection("sessions")
 db.sessions.createIndex({expiredAt: 1}, {expireAfterSeconds: 3})
 db.sessions.insertOne({_id: 1, session: "session1", expiredAt: new Date()})
+
+//membuat unique field. Sparse artinya akan meng-ignore data walaupun field belum ada
+db.customers.createIndex({email: 1}, {unique: true, sparse: true})
