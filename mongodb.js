@@ -221,3 +221,29 @@ db.sessions.insertOne({_id: 1, session: "session1", expiredAt: new Date()})
 
 //membuat unique field. Sparse artinya akan meng-ignore data walaupun field belum ada
 db.customers.createIndex({email: 1}, {unique: true, sparse: true})
+
+//gunakan index hanya pada kondisi tertentu
+db.products.createIndex({harga: 1}, { partialFilterExpression: {harga: { $gt: 0 }}})
+
+//membuat user
+use admin
+db.createUser({
+    user: 'ichwan',
+    pwd: 'ichwan',
+    roles: [
+        'userAdminAnyDatabase',
+        'readWriteAnyDatabase'
+    ]
+})
+
+//mencari restaurant yang berdekatan dengan variabel
+var neighborhood = db.neighborhoods.findOne( { geometry: { $geoIntersects: { $geometry: { type: "Point", coordinates: [ -73.93414657, 40.82302903 ] } } } } )
+db.restaurants.find( { location: { $geoWithin: { $geometry: neighborhood.geometry } } } ).count()
+
+//menemukan restaurant 5 mil dari titik kordinat
+db.restaurants.find({ location:
+   { $geoWithin:
+      { $centerSphere: [ [ -73.93414657, 40.82302903 ], 5 / 3963.2 ] } } })
+
+var METERS_PER_MILE = 1609.34
+db.restaurants.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ -73.93414657, 40.82302903 ] }, $maxDistance: 5 * METERS_PER_MILE } } })
