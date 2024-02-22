@@ -213,3 +213,8 @@ db.products.createIndex({
         tags: 2
     }
 })
+
+//TimeToLive index digunakan untuk menyimpan data temporary sesuai waktu expired yg telah ditentukan
+db.createCollection("sessions")
+db.sessions.createIndex({expiredAt: 1}, {expireAfterSeconds: 3})
+db.sessions.insertOne({_id: 1, session: "session1", expiredAt: new Date()})
