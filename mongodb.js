@@ -247,3 +247,8 @@ db.restaurants.find({ location:
 
 var METERS_PER_MILE = 1609.34
 db.restaurants.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ -73.93414657, 40.82302903 ] }, $maxDistance: 5 * METERS_PER_MILE } } })
+
+//penggunaan findOneAndUpdate untuk multi document transaction
+db.products.findOneAndUpdate({"_id": 9}, {$inc: {"harga": 2000}})
+
+//https://www.mongodb.com/docs/manual/core/dot-dollar-considerations/
