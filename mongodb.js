@@ -252,3 +252,11 @@ db.restaurants.find({ location: { $nearSphere: { $geometry: { type: "Point", coo
 db.products.findOneAndUpdate({"_id": 9}, {$inc: {"harga": 2000}})
 
 //https://www.mongodb.com/docs/manual/core/dot-dollar-considerations/
+/*In addition to the storage validation rules above, there are some general restrictions on using dollar ($) prefixed field names. These fields cannot:
+    Be indexed
+    Be used as part of a shard key
+    Be validated using $jsonSchema
+    Be be modified with an escape sequence
+    Be used with Field Level Encryption
+    Be used as a subfield in an _id document
+*/ 
