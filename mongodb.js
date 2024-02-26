@@ -198,6 +198,10 @@ db.products.createIndex({ name: 1})
 db.products.getIndexes()
 db.products.dropIndex("nama index")
 
+//hide dan unhide index, daripada drop dan recreate index
+db.products.hideIndex("nama index")
+db.products.unhideIndex("nama index")
+
 //membuat index agar proses search lebih cepat pada field name secara ascending, jika -1 descending
 db.products.createIndex({ name: 1})
 db.products.getIndexes()
